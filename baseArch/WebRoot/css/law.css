@@ -1,0 +1,115 @@
+        body {margin:0; padding:0; font-size: 12px;}
+        p {margin:0; padding:0;}
+        #content {
+             border: 1px solid #3C63C7/*#96C2F1*/;
+             background-color: #E8F5FE;
+             /*margin-left:1px;*/
+             border-radius: 3px 3px 3px 3px;
+             position: relative;
+        }
+        #canvas {
+             /*margin-left:1px;*/
+        }
+        #graph div.graph {
+            border: 1px solid #3C63C7/*#3C63C7*/;
+            /*border-radius: 10px 10px 10px 10px;*/
+            box-shadow: 2px 1px 10px rgba(39, 57, 102, 0.44);
+            color: #333333;
+            display: inline-block;
+            position: absolute;
+            background: #f0f6f7;
+            padding-top: 5px;
+			/*padding-bottom: 5px;*/
+        }
+        #graph div.graph div.title {
+            background: #a0c6cc;
+			text-align: left;.
+        }
+        #graph div.graph div.content {
+        	border-bottom: 1px solid #EEEEEE;
+            padding: 5px;
+            word-wrap: break-word;
+			word-break: normal;
+            overflow: hidden;
+            text-align: center;
+            background: #f0f6f7;
+            background: none repeat scroll 0 0 #ffffff;
+        }
+        
+        #button {width: 200px; height: 200px; position: absolute; top:5px; right: 10px; display: none; font-size: 16px; font-weight: bold;}
+    
+    .DreamMenu
+    {
+      position: absolute;
+      visibility: hidden;
+      z-index: 100;
+      overflow: hidden;
+      width: 150px;
+      background-color: buttonface;
+      border: dimgray 1px solid !important;
+      border: buttonhighlight menu menu buttonhighlight 2px outset;
+      padding: 1px !important;
+      padding: 1px 1px 1px 0px;
+      font-size: 12px;
+    }
+    
+    .DreamMenu ul
+    {
+      margin: 1px;
+      border-bottom: buttonhighlight 1px solid;
+      border-top: buttonshadow 1px solid;
+    }
+    
+    .DreamMenu a
+    {
+      display: block;
+      width: 100%;
+      padding: 1px 2px 2px 20px;
+      cursor: default;
+      text-decoration: none;
+      color: #000000;
+    }
+    
+    .DreamMenu a:hover
+    {
+      background: highlight;
+      color: #ffffff;
+    }
+    
+.mydiv {
+background-color: #E8F5FE;
+border: 1px solid #a0c6cc;
+text-align: center;
+line-height: 40px;
+font-size: 12px;
+font-weight: bold;
+z-index:99;
+left:50%;/*FF IE7*/
+top:50%;/*FF IE7*/
+margin-left:-150px!important;/*FF IE7 该值为本身宽的一半 */
+margin-top:-60px!important;/*FF IE7 该值为本身高的一半*/
+margin-top:0px;
+position:fixed!important;/*FF IE7*/
+position:absolute;/*IE6*/
+_top:       expression(eval(document.compatMode &&
+            document.compatMode=='CSS1Compat') ?
+            documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+            document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/
+}
+
+.bg {
+background-color: #666;
+width: 100%;
+height: 100%;
+left:0;
+top:0;/*FF IE7*/
+filter:alpha(opacity=50);/*IE*/
+opacity:0.5;/*FF*/
+z-index:1;
+position:fixed!important;/*FF IE7*/
+position:absolute;/*IE6*/
+_top:       expression(eval(document.compatMode &&
+            document.compatMode=='CSS1Compat') ?
+            documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/
+            document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/
+} 
