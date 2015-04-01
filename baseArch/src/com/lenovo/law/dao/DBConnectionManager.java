@@ -135,6 +135,7 @@ public class DBConnectionManager extends AbsLogger implements java.io.Serializab
 	public List<Map<String, Object>> executeQuery(String sql){
 		return executeQuery(sql, new Object[]{});
 	}
+	
 	public List<Map<String, Object>> executeQuery(String sql, Object[] params) {  
 		Connection conn=null;
 		try {
