@@ -15,21 +15,35 @@ import java.util.Map;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 
-public class DBConnectionManager implements java.io.Serializable {
+import com.lenovo.law.base.Constants;
+import com.lenovo.law.log.AbsLogger;
+
+public class DBConnectionManager extends AbsLogger implements java.io.Serializable {
 	private static final long serialVersionUID = -7957626276795874354L;
 	private static final String jndi = "java:/comp/env/jdbc/education";
-	private static javax.naming.Context ctx = null;
-	private static DataSource ds = null;
-	private static final DBConnectionManager INSTANCE = new DBConnectionManager();  
-	private DBConnectionManager(){};
-	public static final DBConnectionManager getInstance() throws NamingException{
+	private javax.naming.Context ctx = null;
+	private DataSource ds = null;
+	private DBConnectionManager(){}
+	
+	private static class Single {
+        static final DBConnectionManager INSTANCE = new DBConnectionManager();
+    }
+	
+	public static DBConnectionManager getInstance() {
+		return Single.INSTANCE;  
+	}
+	
+	public void init() throws NamingException{
 		if(ctx == null)
 			ctx = new javax.naming.InitialContext();
 		if(ds == null)
 			ds = (DataSource)ctx.lookup(jndi);
-//		System.out.println("========db:==="+ds.getPoolSize());
-		return DBConnectionManager.INSTANCE;  
-	}  
+	}
+
+	public void Destroy(){
+		if (ds!=null)
+			ds.close();
+	}
 	
 	private Connection getConnection() throws NamingException{
 		Connection conn = null;
@@ -63,13 +77,13 @@ public class DBConnectionManager implements java.io.Serializable {
 	public long executeInsert(String sql) throws SQLException{
 		Connection conn=null;
 		try {
-			conn = DBConnectionManager.getInstance().getConnection();
+			conn = this.getConnection();
 		} catch (NamingException e1) {
 			e1.printStackTrace();
 			return -9999;
 		}  
         PreparedStatement stmt = null;
-        long result = -1;
+        long result = -1l;
         ResultSet rs = null;
         try {
         	stmt = createPreparedStatement(conn, sql, new Object[]{});
@@ -90,7 +104,7 @@ public class DBConnectionManager implements java.io.Serializable {
 	public int execute(String sql, Object[] params) throws SQLException {
         Connection conn=null;
 		try {
-			conn = DBConnectionManager.getInstance().getConnection();
+			conn = this.getConnection();
 		} catch (NamingException e1) {
 			e1.printStackTrace();
 			return -9999;
@@ -124,16 +138,17 @@ public class DBConnectionManager implements java.io.Serializable {
 	public List<Map<String, Object>> executeQuery(String sql, Object[] params) {  
 		Connection conn=null;
 		try {
-			conn = DBConnectionManager.getInstance().getConnection();
+			conn = this.getConnection();
 		} catch (NamingException e1) {
 			e1.printStackTrace();
 			return null;
 		}  
 		PreparedStatement stmt = null;  
 		ResultSet rs = null;  
-		try {  
+		try {
 			stmt = createPreparedStatement(conn, sql, params);
-			System.out.println("sql------------:"+sql);
+//			System.out.println("sql------------:"+sql);
+			this.getLogger().print(Constants.DEBUG, "sql------------:"+sql);
 			rs = stmt.executeQuery();;  
   
 			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();  
@@ -145,7 +160,7 @@ public class DBConnectionManager implements java.io.Serializable {
 				map = new HashMap<String, Object>(columnCount);  
 				for (int i = 1; i <= columnCount; i++) {
 					map.put(rsd.getColumnLabel(i), rs.getObject(i));  
-				}  
+				}
 				list.add(map);  
 			}
   
@@ -158,5 +173,5 @@ public class DBConnectionManager implements java.io.Serializable {
             this.closeStmt(stmt);
             this.closeConn(conn);
 		}
-	}  
+	}
 }
